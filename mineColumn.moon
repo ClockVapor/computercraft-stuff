@@ -9,35 +9,25 @@ startDir = base.getDirection!
 digColumn = (n) ->
   result = true
   while result
-    result = digSquare(n)
-    if result
-      moveToNextSquare!
-    else
-      print "error: digColumn(): Failed to dig square."
-  if not result
-    base.moveBack!
+    result = digSquare(n) and moveToNextSquare!
+  base.moveBack!
+  base.turnToFace(base.oppositeDir(startDir))
+  base.dropInventoryExceptFuelSources!
   result
 
 
 moveToNextSquare = ->
   base.turnRight(2)
-  result = base.downWithDig! and base.downWithDig!
-  if not result
-    print "error: moveToNextSquare(): Failed to move down."
-  result
+  base.downWithDig! and base.downWithDig!
 
 
 digSquare = (n) ->
   result = true
   for _ = 1, n - 1
     result = digLine(n)
-    if not result
-      print "error: digSquare(): Failed to digLine()."
-      break
+    if not result then break
     result = moveToNextLine!
-    if not result
-      print "error: digSquare(): Failed to moveToNextLine()."
-      break
+    if not result then break
   if result
     result = digLine(n)
   result
@@ -52,8 +42,6 @@ moveToNextLine = ->
     if moveToNextLineTurnRight then base.turnRight!
     else base.turnLeft!
     moveToNextLineTurnRight = not moveToNextLineTurnRight
-  else
-    print "error: moveToNextLine(): Failed to move forward."
   result
 
 
@@ -65,17 +53,13 @@ digLine = (n) ->
     if inspected and not base.canPickUp(item)
       dumpIntoChest!
     result = base.digDown!
-    if not result
-      print "error: digLine(): Failed to digDown()."
-      break
+    if not result then break
 
     inspected, item = turtle.inspect!
     if inspected and not base.canPickUp(item)
       dumpIntoChest!
     result = base.forwardWithDig!
-    if not result
-      print "error: digLine(): Failed to forwardWithDig()."
-      break
+    if not result then break
 
   if result
     inspected, item = turtle.inspectDown!
