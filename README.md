@@ -2,14 +2,12 @@
 Various scripts for ComputerCraft
 
 
-## base
-https://pastebin.com/3v4TzEYC
-
-Contains general turtle code for use in other scripts.
-
-
 ## mineColumn
 https://pastebin.com/hnrkzi6n
 
-Has a mining turtle dig out a 5x5 column to the bottom of the world and dump anything it digs into a chest behind where
+Has a mining turtle dig out an NxN column to the bottom of the world and dump anything it digs into a chest behind where
 it starts.
+
+This script is the same as the mining turtle's built-in script `excavate`, except it digs out 3 rows at a time instead
+of just 1.
+
